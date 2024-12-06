@@ -2,6 +2,7 @@ package registry // import "github.com/docker/docker/registry"
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -87,11 +88,15 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 		return "", "", err
 	}
 
+	startTime := time.Now()
+
 	resp, err := loginClient.Do(req)
+	fmt.Printf("Call time of %v took %v", req.URL, time.Now().Sub(startTime))
 	if err != nil {
 		err = translateV2AuthError(err)
 		return "", "", err
 	}
+	fmt.Printf("Headers: %v", req.Header)
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusOK {
