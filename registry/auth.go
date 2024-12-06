@@ -88,6 +88,7 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 	if err != nil {
 		return "", "", err
 	}
+	req.Header.Add("sec-authenticated-request-headers", "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaigEBIIqeMdgYHXJTGQITk0scHsYDiiZlC0jWHyIqQ6cA6KyIw9J9d8iWz9bePtvTj+cKsNVMAB2MoUn7amv34MWvoloUYEifAD9pfz3fh8bsvoO3K31DcREjutt0mL47xha59YeLi285qC/o5e6G0RaTivYU3EIZExRC01zWMjtHSa5ooTEGtdKQ0h8=")
 
 	startTime := time.Now()
 
