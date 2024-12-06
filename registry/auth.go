@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 
@@ -91,12 +92,12 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 	startTime := time.Now()
 
 	resp, err := loginClient.Do(req)
-	fmt.Printf("Call time of %v took %v", req.URL, time.Now().Sub(startTime))
+	fmt.Fprintf(os.Stderr, "Call time of %v took %v\n", req.URL, time.Now().Sub(startTime))
 	if err != nil {
 		err = translateV2AuthError(err)
 		return "", "", err
 	}
-	fmt.Printf("Headers: %v", req.Header)
+	fmt.Fprintf(os.Stderr, "Headers: %v\n", resp.Header)
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusOK {
