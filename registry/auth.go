@@ -81,20 +81,21 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 
 	loginClient, err := v2AuthHTTPClient(endpoint.URL, authTransport, modifiers, creds, nil)
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "Call v2AuthHTTPClient %v err %v\n", endpoint.URL, err)
 		return "", "", err
 	}
 
+	startTime := time.Now()
 	req, err := http.NewRequest(http.MethodGet, endpointStr, nil)
 	if err != nil {
 		return "", "", err
 	}
-	req.Header.Add("sec-authenticated-request-headers", "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaigEBIIqeMdgYHXJTGQITk0scHsYDiiZlC0jWHyIqQ6cA6KyIw9J9d8iWz9bePtvTj+cKsNVMAB2MoUn7amv34MWvoloUYEifAD9pfz3fh8bsvoO3K31DcREjutt0mL47xha59YeLi285qC/o5e6G0RaTivYU3EIZExRC01zWMjtHSa5ooTEGtdKQ0h8=")
-
-	startTime := time.Now()
+	// req.Header.Add("sec-authenticated-request-headers", "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaigEBIIqeMdgYHXJTGQITk0scHsYDiiZlC0jWHyIqQ6cA6KyIw9J9d8iWz9bePtvTj+cKsNVMAB2MoUn7amv34MWvoloUYEifAD9pfz3fh8bsvoO3K31DcREjutt0mL47xha59YeLi285qC/o5e6G0RaTivYU3EIZExRC01zWMjtHSa5ooTEGtdKQ0h8=")
 
 	resp, err := loginClient.Do(req)
 	fmt.Fprintf(os.Stderr, "Call time of %v took %v\n", req.URL, time.Now().Sub(startTime))
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "Call %v err %v\n", req.URL, err)
 		err = translateV2AuthError(err)
 		return "", "", err
 	}
@@ -105,6 +106,7 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 		return "Login Succeeded", credentialAuthConfig.IdentityToken, nil
 	}
 
+	fmt.Fprintf(os.Stderr, "login attempt to %s failed with status: %d %s", endpointStr, resp.StatusCode, http.StatusText(resp.StatusCode))
 	// TODO(dmcgowan): Attempt to further interpret result, status code and error code string
 	return "", "", errors.Errorf("login attempt to %s failed with status: %d %s", endpointStr, resp.StatusCode, http.StatusText(resp.StatusCode))
 }
