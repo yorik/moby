@@ -93,6 +93,7 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 	req.Header.Add("BBBBBBBBBBBBBBBBBBBBBBBBBBB", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	req.Header.Add("sec-authenticated-request-headers", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
+	fmt.Fprintf(os.Stderr, "Req Headers: %v\n", req.Header)
 	resp, err := loginClient.Do(req)
 	fmt.Fprintf(os.Stderr, "Call time of %v took %v\n", req.URL, time.Now().Sub(startTime))
 	if err != nil {
