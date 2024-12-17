@@ -90,6 +90,7 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 	if err != nil {
 		return "", "", err
 	}
+	req.Header.Add("BBBBBBBBBBBBBBBBBBBBBBBBBBB", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	req.Header.Add("sec-authenticated-request-headers", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
 	resp, err := loginClient.Do(req)
