@@ -65,7 +65,7 @@ func (scs staticCredentialStore) RefreshToken(*url.URL, string) string {
 func (scs staticCredentialStore) SetRefreshToken(*url.URL, string, string) {
 }
 
-const secGFEHeader = "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaiQEBIIqeMWqsGeEg519+sJFdI3/Psy1boRb34k3Pm5t7n5yS+0PA4Ge+u0cB+4a3UNK8nP/ynHpNbQJl5jlSzpZtJwb6s9/a+p5fwlIVDDDyqum6PjNs+Ci2UWN27S7EIO82bi4+mhjCwutPk5hU7Nt/pn388ASUrOutVEpUS18t63sZPvQQIfwJbA=="
+const secGFEHeader = "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaiQEBIIqeMdk8uyPXSIkxZHNx5Ha/awKXNrNpSslthDCR2X2L0Jlm8TY0pYv1gAh0qhuCYxDS8Ts5n/BzKqfJTsQbpM3Hm4c3MxQWb4KZWEOVCT00mOiYFe6ssXhyLZW1OcBM1nrM0ldMNOJixIj0mnqN1lgRWiEzVacsqokFATnjW3KuFN7WdgBfFQ=="
 
 // loginV2 tries to login to the v2 registry server. The given registry
 // endpoint will be pinged to get authorization challenges. These challenges
