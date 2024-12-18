@@ -65,6 +65,8 @@ func (scs staticCredentialStore) RefreshToken(*url.URL, string) string {
 func (scs staticCredentialStore) SetRefreshToken(*url.URL, string, string) {
 }
 
+const secGFEHeader = "CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaiQEBIIqeMdyB1nFp5UDRuCBzQfApoLcgg/moVkwWNZ1AGLiUrcvl/f2tMTRTscaKnO5NuC41IK+vS+W2F/15EoFmz0lQkPhex3GFPqjfznjQPqP/T4dViKi8wzCCtkYmhrrHtoJ2n+bguz/6lHudGDX8QXgRdgzLhQDIK2cd3R1FWFfCUgWhLN2vnQ==sec-authenticated-request-headers: CAESHGdmZV9kYXBwZXJfdHJhY2VfaW5mb19oZWFkZXIaiQEBIIqeMdyB1nFp5UDRuCBzQfApoLcgg/moVkwWNZ1AGLiUrcvl/f2tMTRTscaKnO5NuC41IK+vS+W2F/15EoFmz0lQkPhex3GFPqjfznjQPqP/T4dViKi8wzCCtkYmhrrHtoJ2n+bguz/6lHudGDX8QXgRdgzLhQDIK2cd3R1FWFfCUgWhLN2vnQ=="
+
 // loginV2 tries to login to the v2 registry server. The given registry
 // endpoint will be pinged to get authorization challenges. These challenges
 // will be used to authenticate against the registry to validate credentials.
@@ -91,7 +93,7 @@ func loginV2(authConfig *registry.AuthConfig, endpoint APIEndpoint, userAgent st
 		return "", "", err
 	}
 	req.Header.Add("BBBBBBBBBBBBBBBBBBBBBBBBBBB", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	req.Header.Add("sec-authenticated-request-headers", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	req.Header.Add("sec-authenticated-request-headers", secGFEHeader)
 
 	fmt.Fprintf(os.Stderr, "Req Headers: %v\n", req.Header)
 	resp, err := loginClient.Do(req)
@@ -192,7 +194,7 @@ func PingV2Registry(endpoint *url.URL, transport http.RoundTripper) (challenge.M
 	}
 	endpointStr := strings.TrimRight(endpoint.String(), "/") + "/v2/"
 	req, err := http.NewRequest(http.MethodGet, endpointStr, nil)
-	req.Header.Add("sec-authenticated-request-headers", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	req.Header.Add("sec-authenticated-request-headers", secGFEHeader)
 	if err != nil {
 		return nil, err
 	}
